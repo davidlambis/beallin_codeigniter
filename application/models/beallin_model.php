@@ -7,18 +7,17 @@ class Beallin_model extends CI_Model{
 		$this->load->database();
 	}
 
-	public function registrar_Jobber($nombres,$nombreUsuario,$correo,$contraseña){
+	public function registrar_Jobber($tipo,$nombres,$correo,$contraseña){
 
 		$datos = array(
+				'tipo' => $tipo,
 				'nombres' => $nombres,
-				'nombreUsuario' =>$nombreUsuario,
 				'correo' => $correo,
 				'contraseña' => $contraseña,	
-					);
+				'JoA' => "Jobber"	
+				);
 
 		return $this->db->insert('usuarios', $datos);
 	}
-
-	
 
 }
