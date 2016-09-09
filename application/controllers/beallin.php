@@ -36,7 +36,35 @@ class Beallin extends CI_Controller {
 
 			if($this->beallin_model->registrar_Jobber($tipo,$nombres,$correo,$contraseña)){
 				// Creación de usuario correcta.
-				$this->load->view('pagina_inicio');
+				echo "<script language='JavaScript'>alert('Usuario registrado exitosamente');</script>"; 
+			}
+		}
+	}
+
+	function registroAdder(){
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+	//Reglas para la validación de datos por parte del servidor.
+	$this->form_validation->set_rules('nombres','nombres','trim|required|min_length[4]|max_length[50]');
+	$this->form_validation->set_rules('correo', 'correo', 'trim|required');
+	$this->form_validation->set_rules('contraseña','contraseña','trim|required|min_length[6]|max_length[20]');
+	$this->form_validation->set_rules('confirmar_contraseña', 'confirmar_contraseña', 'trim|required|min_length[6]|max_length[20]|matches[contraseña]');
+
+		if ($this->form_validation->run() === false){
+			$this->load->view('header');
+			$this->load->view('formulario_registro');
+			$this->load->view('footer'); 
+		}else{	
+			//Se mandan variables del formulario
+			$tipo = $this->input->post('tipo');
+			$nombres = $this->input->post('nombres');
+			$correo = $this->input->post('correo');
+			$contraseña = $this->input->post('contraseña');
+
+			if($this->beallin_model->registrar_Adder($tipo,$nombres,$correo,$contraseña)){
+				// Creación de usuario correcta.
+				echo "<script language='JavaScript'>alert('Usuario registrado exitosamente');</script>"; 
 			}
 		}
 	}

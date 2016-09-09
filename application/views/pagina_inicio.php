@@ -43,7 +43,7 @@
                     <div class="site-heading">
                         <h2>Todos Dentro.Todos Conectados.</h2>
                         <a href="<?php echo base_url("index.php/beallin/registroJobber"); ?>" class="myButton">Registrarse como Jobber</a>
-                        <a href="#" class="myButton">Registrarse como Adder</a>
+                        <a href="<?php echo base_url("index.php/beallin/registroAdder"); ?>" class="myButton">Registrarse como Adder</a>
                     </div>
                 </div>
             </div>

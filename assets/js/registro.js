@@ -56,7 +56,7 @@ $(document).ready(function(){
 	});
 
 	jQuery.validator.addMethod("nombres", function(value, element) {
-  	return this.optional( element ) || /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/.test( value );
+  	return this.optional( element ) || /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ0-9'\s]+$/.test( value );
 	}, 'Información no válida. Ingrésala de nuevo');
 
 	jQuery.validator.addMethod("contraseña", function(value, element) {

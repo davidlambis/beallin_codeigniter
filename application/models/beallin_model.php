@@ -20,4 +20,17 @@ class Beallin_model extends CI_Model{
 		return $this->db->insert('usuarios', $datos);
 	}
 
+	public function registrar_Adder($tipo,$nombres,$correo,$contraseña){
+
+		$datos = array(
+				'tipo' => $tipo,
+				'nombres' => $nombres,
+				'correo' => $correo,
+				'contraseña' => $contraseña,	
+				'JoA' => "Adder"	
+				);
+
+		return $this->db->insert('usuarios', $datos);
+	}
+
 }
