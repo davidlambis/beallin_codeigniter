@@ -13,7 +13,7 @@ class Beallin_model extends CI_Model{
 				'tipo' => $tipo,
 				'nombres' => $nombres,
 				'correo' => $correo,
-				'contraseña' => $contraseña,	
+				'contraseña' => $this->hash_password($contraseña),	
 				'JoA' => "Jobber"	
 				);
 
@@ -26,11 +26,28 @@ class Beallin_model extends CI_Model{
 				'tipo' => $tipo,
 				'nombres' => $nombres,
 				'correo' => $correo,
-				'contraseña' => $contraseña,	
+				'contraseña' => $this->hash_password($contraseña),	
 				'JoA' => "Adder"	
 				);
 
 		return $this->db->insert('usuarios', $datos);
 	}
+
+	// Nos devuelve un objeto usuario según el correo y contraseña que se introduzca.
+	public function usuario_por_correo_y_contraseña($correo,$contraseña){
+		$this->db->select('idUsuario, correo');
+		$this->db->from('usuarios');
+		$this->db->where('correo', $correo);
+		$this->db->where('contraseña', $contraseña);
+		$consulta = $this->db->get();
+		$resultado = $consulta->row();
+		return $resultado;
+	}
+
+	private function hash_password($contraseña) {
+		return password_hash($contraseña, PASSWORD_BCRYPT);
+	} 
+
+	
 
 }

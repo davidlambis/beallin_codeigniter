@@ -47,6 +47,9 @@
     <!-- Acciones de js para el registro-->
     <script src="<?php echo base_url("assets/js/registro.js"); ?> "></script> 
 
+    <!-- Acciones de js para el login -->
+      <script src="<?php echo base_url("assets/js/login.js"); ?> "></script> 
+
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo base_url("assets/vendor/bootstrap/js/bootstrap.min.js"); ?> "></script>
 

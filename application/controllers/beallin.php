@@ -5,6 +5,8 @@ class Beallin extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('beallin_model');
+		$this->load->library(array('session'));
+		$this->load->helper(array('url'));
 	}
 
 	function index(){
@@ -69,7 +71,57 @@ class Beallin extends CI_Controller {
 		}
 	}
 
+	public function login(){
+		$this->load->helper('form');
+		$this->load->library('form_validation');
 
+	$this->form_validation->set_rules('correo', 'correo', 'trim|required');
+	$this->form_validation->set_rules('contraseña','contraseña','trim|required');	
+
+		if ($this->form_validation->run() === false){
+		//if($this->input->post()){
+			$data = array();
+			$this->load->view('header');
+			$this->load->view('formulario_login' , $data);
+			$this->load->view('footer');
+		}else{	
+			$correo = $this->input->post('correo');
+			$contraseña = $this->input->post('contraseña');
+			$usuario = $this->beallin_model->usuario_por_correo_y_contraseña($correo,$contraseña);
+			if($usuario) {
+				$usuario_data = array(
+               'idUsuario' => $usuario->idUsuario,
+               'correo' => $usuario->correo,
+               'logueado' => TRUE
+               );
+			   $this->session->set_userdata($usuario_data);
+			   echo "<script language='JavaScript'>alert('login exitoso');</script>";
+			}else{
+			   echo "<script language='JavaScript'>alert('Error en los datos');</script>";
+			   //redirect('beallin/login');
+			   
+			}
+		}
+		//}
+		 //else{
+			/*$data = array();
+			$this->load->view('header');
+			$this->load->view('formulario_login' , $data);
+			$this->load->view('footer'); */
+		//}
+	}
+
+	public function logueado() {
+      if($this->session->userdata('logueado')){
+         $data = array();
+         $data['correo'] = $this->session->userdata('correo');
+        // $this->load->view('usuarios/logueado', $data); Toca poner el home.
+      }else{
+         redirect('usuarios/iniciar_sesion');
+      }
+   }
+
+		
 	// Funciones para validar si el correo del usuario ya está registrado en la base de datos.
 	private function correo_existe($correo)
 	{

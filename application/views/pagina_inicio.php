@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#" >Iniciar Sesión</a>
+                        <a href="<?php echo base_url("index.php/beallin/login"); ?>" >Iniciar Sesión</a>
                     </li>
                 </ul>
             </div>
