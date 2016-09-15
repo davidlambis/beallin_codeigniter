@@ -1,15 +1,28 @@
 $(document).ready(function(){
-	console.log("Iniciando Sitio");
 
 	$("#form_login").validate({
 		rules : {
 			correo : {
-				required : true
+				required : true,
+				remote: {
+					url: "http://localhost/codeignitervacio/index.php/beallin/verificar_correo_login",
+					type: "post",
+					data: {
+						correo: function(){ 
+							return $("#correo").val(); 
+						}
+					}
+				}		
 			},
 			contraseña : {
-				required : true			
+				required : true
 			}		
 	},
+	messages: {
+			correo: {
+				remote: 'Éste correo no está registrado.'
+			}
+	},		
 	submitHandler : function(form){
 		form.submit();	
 	},

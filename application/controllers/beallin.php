@@ -15,6 +15,12 @@ class Beallin extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	function home(){
+		$this->load->view('header');
+		$this->load->view('pagina_home');
+		$this->load->view('footer');
+	}
+
 	function registroJobber(){
 		$this->load->helper('form');
 		$this->load->library('form_validation');
@@ -95,10 +101,14 @@ class Beallin extends CI_Controller {
                'logueado' => TRUE
                );
 			   $this->session->set_userdata($usuario_data);
-			   echo "<script language='JavaScript'>alert('login exitoso');</script>";
+			   //echo "<script language='JavaScript'>alert('login exitoso');</script>";
+			   redirect('beallin/home');
 			}else{
-			   echo "<script language='JavaScript'>alert('Error en los datos');</script>";
-			   //redirect('beallin/login');
+				$data['mensaje'] = 'Error en datos';
+			 	$this->load->view('header');
+				$this->load->view('formulario_login' , $data);
+				$this->load->view('footer');
+
 			   
 			}
 		}
@@ -141,5 +151,18 @@ class Beallin extends CI_Controller {
 			}
 		}
 	}
+
+ 	//Función para saber si el correo está registrado en la base de datos y no dejar iniciar sesión en caso de que no. 
+	function verificar_correo_login()
+	{
+		if (array_key_exists('correo',$_POST)) {
+			if ( $this->correo_existe($this->input->post('correo')) == TRUE ) {
+				echo json_encode(TRUE);
+			} else {
+				echo json_encode(FALSE);
+			}
+		}
+	}
+
 
 }
