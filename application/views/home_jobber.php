@@ -28,7 +28,7 @@
                         <a href="#" >Publicar oferta</a>
                     </li>
                     <li>
-                        <a href="#" >Cerrar Sesión</a>
+                        <a href="<?php echo base_url("index.php/beallin/cerrar_sesion"); ?>" >Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h2>Todos Dentro.Todos Conectados.</h2>
+                        <h2>HOME JOBBER</h2>
                         <a href="#" class="myButton">Publicar oferta</a>
                     </div>
                 </div>

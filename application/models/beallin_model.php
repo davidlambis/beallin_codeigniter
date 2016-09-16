@@ -44,6 +44,19 @@ class Beallin_model extends CI_Model{
 		return $resultado;
 	}
 
+	//Función para ver si es un Jobber o Adder
+	public function jobber_o_adder($correo){	
+		$this->db->from('usuarios');
+		$this->db->where('correo', $correo);
+		$consulta = $this->db->get();
+
+		foreach ($consulta->result() as $value) {
+			$tipo = $value->JoA;
+		}
+		return $tipo;
+		
+	}
+
 	private function hash_password($contraseña) {
 		return password_hash($contraseña, PASSWORD_BCRYPT);
 	} 

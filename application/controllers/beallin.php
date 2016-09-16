@@ -15,11 +15,26 @@ class Beallin extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	function home(){
-		$this->load->view('header');
-		$this->load->view('pagina_home');
-		$this->load->view('footer');
+	function homeJobber(){
+		if($this->session->userdata('logueado')){
+			$this->load->view('header');
+			$this->load->view('home_jobber');
+			$this->load->view('footer');
+		}else{
+			redirect('beallin');
+		}
 	}
+
+	function homeAdder(){
+		if($this->session->userdata('logueado')){
+			$this->load->view('header');
+			$this->load->view('home_adder');
+			$this->load->view('footer');
+		}else{
+			redirect('beallin');
+		}
+	}
+
 
 	function registroJobber(){
 		$this->load->helper('form');
@@ -101,35 +116,46 @@ class Beallin extends CI_Controller {
                'logueado' => TRUE
                );
 			   $this->session->set_userdata($usuario_data);
-			   //echo "<script language='JavaScript'>alert('login exitoso');</script>";
-			   redirect('beallin/home');
+			   $tipo = $this->beallin_model->jobber_o_adder($correo);
+			   if($tipo=='Jobber'){
+			   	 redirect('beallin/homeJobber');
+			   }elseif($tipo == 'Adder'){
+			    redirect('beallin/homeAdder');
+			   }
 			}else{
 				$data['mensaje'] = 'Error en datos';
 			 	$this->load->view('header');
 				$this->load->view('formulario_login' , $data);
-				$this->load->view('footer');
-
-			   
+				$this->load->view('footer');			   
 			}
 		}
-		//}
-		 //else{
-			/*$data = array();
-			$this->load->view('header');
-			$this->load->view('formulario_login' , $data);
-			$this->load->view('footer'); */
-		//}
 	}
 
 	public function logueado() {
       if($this->session->userdata('logueado')){
          $data = array();
          $data['correo'] = $this->session->userdata('correo');
-        // $this->load->view('usuarios/logueado', $data); Toca poner el home.
-      }else{
-         redirect('usuarios/iniciar_sesion');
-      }
+         $tipo = $this->beallin_model->jobber_o_adder($correo);
+	         if($tipo == 'Jobber'){
+	         	$this->load->view('home_jobber', $data); 
+	    	 }elseif($tipo == 'Adder'){
+	    	 	$this->load->view('home_adder', $data); 
+	    	 }
+      	}else{
+         redirect('beallin/login');
+      	}
+    }
+
+   public function cerrar_sesion(){
+   	  $usuario_data = array(
+   	  	'logueado' => FALSE
+   	  	);
+   	  $this->session->unset_userdata('idUsuario');
+   	  $this->session->unset_userdata('correo');
+   	  $this->session->set_userdata($usuario_data);
+   	  redirect('beallin');
    }
+
 
 		
 	// Funciones para validar si el correo del usuario ya está registrado en la base de datos.
@@ -163,6 +189,8 @@ class Beallin extends CI_Controller {
 			}
 		}
 	}
+
+	
 
 
 }
